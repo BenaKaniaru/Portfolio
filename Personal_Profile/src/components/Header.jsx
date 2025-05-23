@@ -1,14 +1,20 @@
 import { useState } from "react";
-import {Link, useNavigate} from "react-router-dom"
+import {Link, useLocation} from "react-router-dom"
 export default function Header() {
+  const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
+
+  
+  const isActiveLink = (path) => location.pathname === path;
+  const linkClass = (path) => isActiveLink(path) ? "text-red-500 font-black" : "hover:font-black hover:cursor-pointer hover:text-red-500"
+  
+ 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <header className="flex justify-between items-center px-8 py-4 bg-gray-300 z-40 fixed top-0 w-full">
+    <header className="flex justify-between items-center px-8 py-4 bg-white z-40 fixed border-b-2 border-black top-0 w-full">
       <div className=" text-black font-bold hidden md:inline-block">
         <span className="text-red-500 text-4xl">BK</span>
         <span className="text-2xl text-blue-950">aniaru.</span>
@@ -19,15 +25,17 @@ export default function Header() {
 
       <nav className="relative">
         {/*Navigation menu for larger screens*/}
-        <ul className="md:flex space-x-4 text-blue-950 text-lg font-semibold hidden">
-          <li className="hover:cursor-pointer hover:text-red-300">
+        <ul className="md:flex space-x-4 text-black text-lg font-semibold hidden">
+          <li className={linkClass("/")}>
             <Link to="/">Home</Link>
           </li>
-          <li className="hover:cursor-pointer hover:text-red-300">About Me</li>
-          <li className="hover:cursor-pointer hover:text-red-300">
+          <li className={linkClass("/About")}>
+            <Link>About Me</Link>
+          </li>
+          <li className={linkClass("/Projects")}>
             <Link to="/Projects">Projects</Link>
           </li>
-          <li className="hover:cursor-pointer hover:text-red-300">
+          <li className={linkClass("/Contact")}>
             <Link to="/Contact">Contacts</Link>
           </li>
         </ul>
@@ -59,23 +67,20 @@ export default function Header() {
           <ul
             className={
               isOpen
-                ? " transform transition duratio-300 ease-in-out flex flex-col text-lg font-semibold absolute mt-4 bg-gray-300 z-40 text-blue-950 p-4 -left-18 top-8 md:hidden w-32 space-y-2"
+                ? " transform transition duratio-300 ease-in-out flex flex-col text-lg font-semibold absolute mt-4 b bg-white z-40 text-blue-950 p-4 -left-18 top-8 md:hidden w-32 space-y-2 border-2 border-black border-t-0 border-r-0"
                 : "hidden"
             }
           >
-            <li className="hover:cursor-pointer hover:text-red-300">
+            <li className={linkClass("/")}>
               <Link to="/">Home</Link>
             </li>
-            <li className="hover:cursor-pointer hover:text-red-300">
+            <li className="hover:font-black hover:cursor-pointer hover:text-red-500">
               About Me
             </li>
-            <li className="hover:cursor-pointer hover:text-red-300">
-              <Link to="/Projects">
-                Projects
-              </Link>
-  
+            <li className={linkClass("/Projects")}>
+              <Link to="/Projects">Projects</Link>
             </li>
-            <li className="hover:cursor-pointer hover:text-red-300">
+            <li className={linkClass("/Contact")}>
               <Link to="/Contact">Contacts </Link>
             </li>
           </ul>
